@@ -13,7 +13,7 @@ RUN apt-get update && \
 USER ${NB_USER}
 
 # Shallow clone the ambrs repo into the home directory
-RUN git clone --depth 1 --branch main \
+RUN git clone --depth 1 --branch main-dev \
     https://github.com/AMBRS-project/ambrs.git \
     ${HOME}/ambrs
 
