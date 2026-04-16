@@ -1,4 +1,4 @@
-FROM docker.io/jupyter/base-notebook:latest
+FROM quay.io/jupyter/base-notebook:python-3.12
 
 # Binder requires NB_USER (set by base image) and UID 1000
 
