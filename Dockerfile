@@ -31,6 +31,7 @@ RUN git clone --depth 1 https://github.com/AMBRS-project/ambuilder.git /tmp/ambu
         -DENABLE_CAMP=ON && \
     cmake --build /tmp/ambuilder-build && \
     cmake --install /tmp/ambuilder-build && \
+    ldconfig && \
     rm -rf /tmp/ambuilder /tmp/ambuilder-build
 
 USER ${NB_USER}
