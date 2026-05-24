@@ -4,11 +4,32 @@ FROM quay.io/jupyter/base-notebook:python-3.12
 
 USER root
 
-# Install git for the shallow clone
+# Install git and build dependencies for AMBuilder
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends git && \
+    apt-get install -y --no-install-recommends \
+        cmake \
+        gcc \
+        g++ \
+        gfortran \
+        git \
+        make \
+        pkg-config \
+        zlib1g-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# Build and install PartMC and MAM4 via AMBuilder
+RUN git clone --depth 1 https://github.com/AMBRS-project/ambuilder.git /tmp/ambuilder && \
+    cmake -S /tmp/ambuilder -B /tmp/ambuilder-build \
+        -G "Unix Makefiles" \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_C_COMPILER=gcc \
+        -DCMAKE_Fortran_COMPILER=gfortran \
+        -DCMAKE_INSTALL_PREFIX=/usr/local \
+        -DENABLE_CAMP=OFF && \
+    cmake --build /tmp/ambuilder-build && \
+    cmake --install /tmp/ambuilder-build && \
+    rm -rf /tmp/ambuilder /tmp/ambuilder-build
 
 USER ${NB_USER}
 
