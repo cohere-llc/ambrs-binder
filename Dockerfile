@@ -31,8 +31,11 @@ RUN git clone --depth 1 https://github.com/AMBRS-project/ambuilder.git /tmp/ambu
         -DENABLE_CAMP=ON && \
     cmake --build /tmp/ambuilder-build && \
     cmake --install /tmp/ambuilder-build && \
+    echo "/usr/local/lib" > /etc/ld.so.conf.d/usrlocal.conf && \
     ldconfig && \
     rm -rf /tmp/ambuilder /tmp/ambuilder-build
+
+ENV LD_LIBRARY_PATH=/usr/local/lib:${LD_LIBRARY_PATH}
 
 USER ${NB_USER}
 
