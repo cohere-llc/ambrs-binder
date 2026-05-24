@@ -12,6 +12,8 @@ RUN apt-get update && \
         g++ \
         gfortran \
         git \
+        libblas-dev \
+        liblapack-dev \
         make \
         pkg-config \
         zlib1g-dev && \
@@ -26,7 +28,7 @@ RUN git clone --depth 1 https://github.com/AMBRS-project/ambuilder.git /tmp/ambu
         -DCMAKE_C_COMPILER=gcc \
         -DCMAKE_Fortran_COMPILER=gfortran \
         -DCMAKE_INSTALL_PREFIX=/usr/local \
-        -DENABLE_CAMP=OFF && \
+        -DENABLE_CAMP=ON && \
     cmake --build /tmp/ambuilder-build && \
     cmake --install /tmp/ambuilder-build && \
     rm -rf /tmp/ambuilder /tmp/ambuilder-build
